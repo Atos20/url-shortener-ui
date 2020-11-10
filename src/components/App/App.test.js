@@ -8,12 +8,9 @@ jest.mock('../../apiCalls.js');
 
 
 describe('UrlForm', () => {
-    let newUrlByUser
+   
     beforeEach(() => {
         
-
-    
-
         getUrls.mockResolvedValue({
             urls : [
           {
@@ -131,16 +128,6 @@ describe('UrlForm', () => {
     })
   screen.debug()
     
-    //aassert that the new card is there!!
-    
-    // const returnedTitle6 = await waitFor(() =>screen.getByText('APItitle 6'));
-    // const returnedLong_url6 = await waitFor(() => screen.getByText('APIlong url here 6'));
-    // const returnedShort_url6 = await waitFor(() => screen.getByText('APIshort url here 6'));
-    
-    // expect(returnedTitle6).toBeInTheDocument();
-    // expect(returnedLong_url6).toBeInTheDocument();
-    // expect(returnedShort_url6).toBeInTheDocument();
-    
   });
   
   it('the user should be able to delete a card', async() => {
@@ -166,14 +153,5 @@ describe('UrlForm', () => {
       
       // expect(returnedTitle5).toEqual(null);
     })
-
-    // getUrls.mockResolvedValue(mockUrlData);
-    // deleteUrl.mockResolvedValue(204);
-    // render(<App />);
-    // await waitFor(() => screen.getByRole('heading', { name: 'URL Shortener'}));
-    // const getAllDeleteBtns = screen.getAllByRole('button', { name: 'Delete' });
-    // const deletedTitle = screen.getByText('Testing 2');
-    // userEvent.click(getAllDeleteBtns[1]);
-    // await waitFor(() => (expect(deletedTitle).not.toBeInTheDocument()));
   });
   
