@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls, sendUrls} from '../../apiCalls';
+import { getUrls, sendUrls, deleteUrl} from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -9,34 +9,48 @@ export class App extends Component {
     super(props);
     this.state = {
       urls: [],
-      savedUrls: []
+      reponse: '',
+      error:''
     }
   }
+
+  resolveDeleteRequest = async (id) => {
+    const promise = await deleteUrl(id)
+    this.setState({reponse: promise})
+  }
   
+  deleteCard = (event) =>{
+    console.log('delete')
+    const id = event.target.id
+    this.resolveDeleteRequest(id)
+    const stateCopy = [...this.state.urls]
+    const removedElement = stateCopy.find(url => {
+      return url.id === +event.target.id
+    });
+    const index = stateCopy.indexOf(removedElement)
+      if (index !== -1) {
+      stateCopy.splice(index, 1);
+      this.setState({urls: stateCopy});
+    }
+  } 
+
   sendUrl = async(url) => {
-    console.log(url)
     try{
       const newUrl = await sendUrls(url)
-      this.setState({savedUrls: [...this.state.savedUrls, newUrl]})
-      console.log(newUrl)
-      this.getAllUrls()
+      this.setState({urls: [...this.state.urls, newUrl]})
     } catch(error){
-      console.log(error)
       return error
     }
-
   }
 
   getAllUrls= async() => {
     try{
       const allUrls = await getUrls();
-      console.log(allUrls.urls)
-      this.setState({ urls: [...this.state.urls, ...allUrls.urls]})
+      // this.setState({ urls: [...this.state.urls, ...allUrls.urls]})
+      this.setState({ urls: allUrls.urls})
     } catch(error){
-      console.log(error)
       return error
     }
-
   }
 
   componentDidMount= () => {
@@ -54,7 +68,9 @@ export class App extends Component {
         </header>
 
         <UrlContainer 
-          urls={this.state.urls}/>
+          urls={this.state.urls}
+          deleteCard= {this.deleteCard}
+          />
       </main>
     );
   }
