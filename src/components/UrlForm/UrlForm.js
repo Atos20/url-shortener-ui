@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class UrlForm extends Component {
   constructor(props) {
     super();
-    this.props = props;
     this.state = {
       title: '',
       urlToShorten: ''
@@ -17,7 +16,6 @@ class UrlForm extends Component {
     }
     this.props.sendUrl(theUrl);
   }
-
 
   handleNameChange = e => {
     this.setState({ [e.target.name]: e.target.value });
